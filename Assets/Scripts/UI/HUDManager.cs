@@ -146,45 +146,45 @@ public class HUDManager : MonoBehaviour
     {
         Image bar = UIFactory.Panel("BottomBar", root, Palette.Panel.WithAlpha(0.72f));
         UIFactory.Anchor(bar.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 0f),
-            new Vector2(0f, 0f), new Vector2(0f, 96f));
+            new Vector2(0f, 0f), new Vector2(0f, 132f));
+
+        Vector2 bottomLeft = Vector2.zero;
+        Vector2 leftMiddle = new Vector2(0f, 0.5f);
+        const float row = 86f;
 
         TextMeshProUGUI livesLabel = UIFactory.Text("LivesLabel", bar.rectTransform, "VIDAS", 24f,
             Palette.Muted, TextAlignmentOptions.Left);
-        UIFactory.Anchor(livesLabel.rectTransform, new Vector2(0f, 0f), new Vector2(0f, 1f),
-            new Vector2(36f, 0f), new Vector2(150f, 0f));
+        UIFactory.Place(livesLabel.rectTransform, bottomLeft, leftMiddle,
+            new Vector2(36f, row), new Vector2(140f, 40f));
 
         for (int i = 0; i < GameManager.StartLives; i++)
         {
             Image heart = UIFactory.Panel("Heart" + i, bar.rectTransform, Palette.Pink);
             heart.sprite = ArtFactory.Heart;
-            heart.rectTransform.anchorMin = new Vector2(0f, 0.5f);
-            heart.rectTransform.anchorMax = new Vector2(0f, 0.5f);
-            heart.rectTransform.sizeDelta = new Vector2(44f, 44f);
-            heart.rectTransform.anchoredPosition = new Vector2(164f + (i * 52f), 0f);
+            UIFactory.Place(heart.rectTransform, bottomLeft, new Vector2(0.5f, 0.5f),
+                new Vector2(176f + (i * 52f), row), new Vector2(44f, 44f));
             hearts.Add(heart);
         }
 
         TextMeshProUGUI staminaLabel = UIFactory.Text("StaminaLabel", bar.rectTransform, "ESTAMINA", 24f,
             Palette.Muted, TextAlignmentOptions.Left);
-        UIFactory.Anchor(staminaLabel.rectTransform, new Vector2(0f, 0f), new Vector2(0f, 1f),
-            new Vector2(380f, 0f), new Vector2(530f, 0f));
+        UIFactory.Place(staminaLabel.rectTransform, bottomLeft, leftMiddle,
+            new Vector2(372f, row), new Vector2(170f, 40f));
 
         staminaBar = UIFactory.Bar("StaminaBar", bar.rectTransform, new Vector2(260f, 20f),
             Palette.Green, Palette.Void.WithAlpha(0.85f));
-        RectTransform staminaRect = staminaBar.rectTransform.parent as RectTransform;
-        staminaRect.anchorMin = new Vector2(0f, 0.5f);
-        staminaRect.anchorMax = new Vector2(0f, 0.5f);
-        staminaRect.anchoredPosition = new Vector2(660f, 0f);
+        UIFactory.Place(staminaBar.rectTransform.parent as RectTransform, bottomLeft, leftMiddle,
+            new Vector2(556f, row), new Vector2(260f, 20f));
 
         dashText = UIFactory.Text("DashState", bar.rectTransform, "DASH PRONTO", 24f,
             Palette.Cyan, TextAlignmentOptions.Left);
-        UIFactory.Anchor(dashText.rectTransform, new Vector2(0f, 0f), new Vector2(0f, 1f),
-            new Vector2(810f, 0f), new Vector2(1060f, 0f));
+        UIFactory.Place(dashText.rectTransform, bottomLeft, leftMiddle,
+            new Vector2(848f, row), new Vector2(340f, 40f));
 
         hintText = UIFactory.Text("Hints", bar.rectTransform, string.Empty, 24f,
-            Palette.Muted, TextAlignmentOptions.Right);
-        UIFactory.Anchor(hintText.rectTransform, new Vector2(0.4f, 0f), new Vector2(1f, 1f),
-            new Vector2(0f, 0f), new Vector2(-36f, 0f));
+            Palette.Muted, TextAlignmentOptions.Center);
+        UIFactory.Anchor(hintText.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 0f),
+            new Vector2(36f, 18f), new Vector2(-36f, 62f));
     }
 
     private void BuildAnnounce()
@@ -204,7 +204,7 @@ public class HUDManager : MonoBehaviour
         UIFactory.Stretch(backdrop.rectTransform);
         pausePanel = backdrop.rectTransform;
 
-        Image frame = UIFactory.Frame("PauseFrame", pausePanel, new Vector2(760f, 560f),
+        Image frame = UIFactory.Frame("PauseFrame", pausePanel, new Vector2(760f, 620f),
             Palette.Panel, Palette.Cyan.WithAlpha(0.8f));
 
         TextMeshProUGUI title = UIFactory.Text("Title", frame.rectTransform, "PAUSA", 72f,
@@ -239,7 +239,7 @@ public class HUDManager : MonoBehaviour
         UIFactory.Stretch(backdrop.rectTransform);
         endPanel = backdrop.rectTransform;
 
-        Image frame = UIFactory.Frame("EndFrame", endPanel, new Vector2(880f, 620f),
+        Image frame = UIFactory.Frame("EndFrame", endPanel, new Vector2(900f, 720f),
             Palette.Panel, Palette.Pink.WithAlpha(0.8f));
 
         endTitle = UIFactory.Text("Title", frame.rectTransform, "FIM", 68f,
@@ -250,15 +250,15 @@ public class HUDManager : MonoBehaviour
         endStats = UIFactory.Text("Stats", frame.rectTransform, string.Empty, 32f,
             Palette.White, TextAlignmentOptions.Top);
         UIFactory.Anchor(endStats.rectTransform, new Vector2(0f, 1f), new Vector2(1f, 1f),
-            new Vector2(40f, -350f), new Vector2(-40f, -140f));
+            new Vector2(40f, -410f), new Vector2(-40f, -130f));
 
         endPrimaryButton = UIFactory.Button("JOGAR DE NOVO", frame.rectTransform,
             new Vector2(560f, 88f), Palette.Green, OnRestartClicked);
-        endPrimaryButton.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, -100f);
+        endPrimaryButton.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, -170f);
 
         Button menu = UIFactory.Button("MENU INICIAL", frame.rectTransform,
             new Vector2(560f, 88f), Palette.Cyan, OnMenuClicked);
-        menu.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, -205f);
+        menu.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, -275f);
 
         endPanel.gameObject.SetActive(false);
     }

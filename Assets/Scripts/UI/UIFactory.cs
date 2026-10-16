@@ -94,6 +94,17 @@ public static class UIFactory
         rect.offsetMax = offsetMax;
     }
 
+    /// <summary>Posiciona um elemento com ancora, pivo, posicao e tamanho explicitos.</summary>
+    public static void Place(RectTransform rect, Vector2 anchor, Vector2 pivot,
+        Vector2 position, Vector2 size)
+    {
+        rect.anchorMin = anchor;
+        rect.anchorMax = anchor;
+        rect.pivot = pivot;
+        rect.sizeDelta = size;
+        rect.anchoredPosition = position;
+    }
+
     public static void Stretch(RectTransform rect, float padding = 0f)
     {
         Anchor(rect, Vector2.zero, Vector2.one,

@@ -30,7 +30,9 @@ public class PatrolEnemy : EnemyBase
 
     protected override void OnStuck()
     {
-        Reverse();
+        // Gira 90 graus: se o eixo atual estiver bloqueado dos dois lados, a
+        // sentinela encontra outro corredor em vez de vibrar no lugar.
+        Direction = new Vector2(-Direction.y, Direction.x);
     }
 
     protected override void OnBumped(Collision2D collision)

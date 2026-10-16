@@ -24,6 +24,10 @@ public class MenuBuilder : MonoBehaviour
     {
         actions = gameObject.AddComponent<MenuActions>();
 
+        // A cena do menu nao tem luz 2D, entao os sprites daqui usam o material
+        // padrao (unlit) em vez do material iluminado reaproveitado da arena.
+        ArtFactory.SpriteMaterial = null;
+
         SetupCamera();
         ReplaceExistingCanvases();
 
@@ -53,6 +57,7 @@ public class MenuBuilder : MonoBehaviour
             GameObject go = new GameObject("Main Camera");
             go.tag = "MainCamera";
             cam = go.AddComponent<Camera>();
+            go.AddComponent<AudioListener>();
         }
 
         cam.orthographic = true;
@@ -118,13 +123,13 @@ public class MenuBuilder : MonoBehaviour
         TextMeshProUGUI best = UIFactory.Text("Record", root,
             "RECORDE " + record.ToString("000000"), 32f, Palette.Gold, TextAlignmentOptions.Center);
         UIFactory.Anchor(best.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 0f),
-            new Vector2(0f, 150f), new Vector2(0f, 206f));
+            new Vector2(0f, 96f), new Vector2(0f, 150f));
 
         TextMeshProUGUI footer = UIFactory.Text("Footer", root,
             "Projeto Introducao ao Unity  |  M liga/desliga o som", 24f,
             Palette.Muted, TextAlignmentOptions.Center);
         UIFactory.Anchor(footer.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 0f),
-            new Vector2(0f, 40f), new Vector2(0f, 90f));
+            new Vector2(0f, 30f), new Vector2(0f, 78f));
     }
 
     private void BuildButtons(RectTransform root)
@@ -144,13 +149,13 @@ public class MenuBuilder : MonoBehaviour
 
         Button credits = UIFactory.Button("CREDITOS", column, new Vector2(520f, 82f), Palette.Gold,
             ToggleCredits);
-        credits.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, -140f);
+        credits.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, -145f);
 
         if (Application.platform != RuntimePlatform.WebGLPlayer)
         {
             Button quit = UIFactory.Button("SAIR", column, new Vector2(520f, 82f), Palette.Pink,
                 actions.Sair);
-            quit.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, -235f);
+            quit.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, -240f);
         }
     }
 
@@ -196,18 +201,18 @@ public class MenuBuilder : MonoBehaviour
         Image backdrop = UIFactory.Panel(name, root, Palette.Void.WithAlpha(0.92f));
         UIFactory.Stretch(backdrop.rectTransform);
 
-        Image frame = UIFactory.Frame("Frame", backdrop.rectTransform, new Vector2(1280f, 800f),
+        Image frame = UIFactory.Frame("Frame", backdrop.rectTransform, new Vector2(1320f, 920f),
             Palette.Panel, Palette.Cyan.WithAlpha(0.7f));
 
-        TextMeshProUGUI heading = UIFactory.Text("Heading", frame.rectTransform, title, 64f,
+        TextMeshProUGUI heading = UIFactory.Text("Heading", frame.rectTransform, title, 60f,
             Palette.Cyan, TextAlignmentOptions.Top);
         UIFactory.Anchor(heading.rectTransform, new Vector2(0f, 1f), new Vector2(1f, 1f),
-            new Vector2(0f, -110f), new Vector2(0f, -30f));
+            new Vector2(0f, -104f), new Vector2(0f, -28f));
 
-        TextMeshProUGUI text = UIFactory.Text("Body", frame.rectTransform, body, 27f,
+        TextMeshProUGUI text = UIFactory.Text("Body", frame.rectTransform, body, 26f,
             Palette.White, TextAlignmentOptions.TopLeft);
         UIFactory.Anchor(text.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 1f),
-            new Vector2(60f, 130f), new Vector2(-60f, -130f));
+            new Vector2(64f, 140f), new Vector2(-64f, -116f));
 
         Button close = UIFactory.Button("VOLTAR", frame.rectTransform, new Vector2(360f, 78f),
             Palette.Green, () => CloseOverlay(backdrop.rectTransform));

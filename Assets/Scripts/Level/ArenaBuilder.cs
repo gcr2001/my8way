@@ -249,10 +249,10 @@ public class ArenaBuilder : MonoBehaviour
                         shards++;
                         break;
                     case ArenaLayouts.PatrolSpawn:
-                        CreateSentinel(position, wave);
+                        CreateSentinel(position, wave, PreferredAxis(layout, col, row));
                         break;
                     case ArenaLayouts.HunterSpawn:
-                        CreateHunter(position, wave);
+                        CreateHunter(position, wave, PreferredAxis(layout, col, row));
                         break;
                     case ArenaLayouts.HazardSpawn:
                         CreateHazard(position, wave);
@@ -330,20 +330,52 @@ public class ArenaBuilder : MonoBehaviour
         AddGlow(renderer.transform, Palette.Gold, 1.6f);
     }
 
-    private void CreateSentinel(Vector3 position, int wave)
+    private void CreateSentinel(Vector3 position, int wave, Vector2 axis)
     {
         GameObject go = CreateEnemyBody("Sentinel", ArtFactory.Sentinel, position, Palette.Pink);
         PatrolEnemy patrol = go.AddComponent<PatrolEnemy>();
         patrol.Speed = 2.1f + (0.45f * (wave - 1));
+        patrol.Direction = axis;
     }
 
-    private void CreateHunter(Vector3 position, int wave)
+    private void CreateHunter(Vector3 position, int wave, Vector2 axis)
     {
         GameObject go = CreateEnemyBody("Hunter", ArtFactory.Hunter, position, Palette.Purple);
         HunterEnemy hunter = go.AddComponent<HunterEnemy>();
         hunter.PatrolSpeed = 1.7f + (0.3f * (wave - 1));
         hunter.ChaseSpeed = 2.6f + (0.45f * (wave - 1));
         hunter.DetectRadius = 5f + (0.75f * (wave - 1));
+        hunter.Direction = axis;
+    }
+
+    /// <summary>
+    /// Eixo de patrulha do inimigo: o corredor mais longo a partir da celula de
+    /// spawn. Evita que ele nasca virado para uma parede.
+    /// </summary>
+    private static Vector2 PreferredAxis(string[] layout, int col, int row)
+    {
+        int horizontal = OpenRun(layout, col, row, 1, 0) + OpenRun(layout, col, row, -1, 0);
+        int vertical = OpenRun(layout, col, row, 0, 1) + OpenRun(layout, col, row, 0, -1);
+
+        Vector2 axis = horizontal >= vertical ? Vector2.right : Vector2.up;
+        return Random.value < 0.5f ? -axis : axis;
+    }
+
+    private static int OpenRun(string[] layout, int col, int row, int stepX, int stepY)
+    {
+        int steps = 0;
+        int x = col + stepX;
+        int y = row + stepY;
+
+        while (y >= 0 && y < layout.Length && x >= 0 && x < layout[y].Length &&
+               layout[y][x] != ArenaLayouts.Wall)
+        {
+            steps++;
+            x += stepX;
+            y += stepY;
+        }
+
+        return steps;
     }
 
     private GameObject CreateEnemyBody(string name, Sprite sprite, Vector3 position, Color glow)
@@ -400,6 +432,7 @@ public class ArenaBuilder : MonoBehaviour
             GameObject go = new GameObject("Main Camera");
             go.tag = "MainCamera";
             cam = go.AddComponent<Camera>();
+            go.AddComponent<AudioListener>();
         }
 
         cam.orthographic = true;
