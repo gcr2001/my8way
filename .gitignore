@@ -1,0 +1,52 @@
+# Pastas geradas pelo Unity
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+[Rr]ecordings/
+
+# Nunca versionar o cache do Asset Store / pacotes locais
+[Aa]ssets/[Aa]ssetStoreTools*
+/[Aa]ssets/Plugins/Editor/JetBrains*
+
+# Arquivos de solução / IDE gerados pelo Unity
+*.csproj
+*.unityproj
+*.sln
+*.slnx
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+.vs/
+.vscode/
+.idea/
+
+# Builds de plataforma
+*.apk
+*.aab
+*.unitypackage
+*.unitypackage.meta
+*.app
+
+# Crash reports
+sysinfo.txt
+crashlytics-build.properties
+
+# Sistema operacional
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+desktop.ini
