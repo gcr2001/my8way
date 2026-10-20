@@ -5,10 +5,9 @@ Você controla uma esfera de dados dentro de um circuito e precisa coletar todos
 fragmentos de cada setor **antes do cronômetro zerar** — e o cronômetro só volta a
 subir quando você coleta.
 
-> **Preencha antes de entregar**
-> - Aluno: `SEU NOME COMPLETO`
-> - Jogue no navegador (itch.io): `https://SEU-USUARIO.itch.io/my-8-way`
-> - Código fonte (GitHub): `https://github.com/SEU-USUARIO/my8way`
+- **Aluno:** Gabriel de Castro Ribeiro
+- **Código fonte:** https://github.com/gcr2001/my8way
+- **Jogue no navegador:** `https://SEU-USUARIO.itch.io/my-8-way` *(preencher depois de publicar no itch.io)*
 
 ---
 

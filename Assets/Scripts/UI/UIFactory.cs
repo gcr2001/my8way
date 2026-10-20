@@ -14,6 +14,28 @@ public static class UIFactory
 {
     public static readonly Vector2 ReferenceResolution = new Vector2(1920f, 1080f);
 
+    /// <summary>
+    /// Remove canvases que ja existiam na cena. A interface do jogo e montada
+    /// por codigo, entao qualquer UI deixada no editor (inclusive com scripts
+    /// faltando) e descartada para nao sobrepor o HUD nem gerar aviso.
+    /// </summary>
+    public static void DestroyExistingCanvases()
+    {
+        Canvas[] canvases = Object.FindObjectsByType<Canvas>();
+        for (int i = 0; i < canvases.Length; i++)
+        {
+            Canvas canvas = canvases[i];
+            if (canvas == null)
+            {
+                continue;
+            }
+
+            GameObject root = canvas.transform.root.gameObject;
+            root.SetActive(false);
+            Object.Destroy(root);
+        }
+    }
+
     /// <summary>Cria (ou reaproveita) um canvas em overlay com escala por resolucao.</summary>
     public static Canvas CreateCanvas(string name, int sortingOrder)
     {

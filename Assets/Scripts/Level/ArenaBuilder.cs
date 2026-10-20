@@ -71,6 +71,9 @@ public class ArenaBuilder : MonoBehaviour
         tileRoot = NewChild("Tiles");
         dynamicRoot = NewChild("Entities");
 
+        // Descarta qualquer UI antiga da cena antes de montar o HUD proprio.
+        UIFactory.DestroyExistingCanvases();
+
         Decor.Build(transform);
         GameManager.Ensure();
         HUDManager.Build();

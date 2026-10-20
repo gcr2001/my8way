@@ -73,15 +73,7 @@ public class MenuBuilder : MonoBehaviour
     /// </summary>
     private void ReplaceExistingCanvases()
     {
-        Canvas[] canvases = Object.FindObjectsByType<Canvas>();
-        for (int i = 0; i < canvases.Length; i++)
-        {
-            if (canvases[i] != null)
-            {
-                canvases[i].gameObject.SetActive(false);
-                Destroy(canvases[i].gameObject);
-            }
-        }
+        UIFactory.DestroyExistingCanvases();
     }
 
     private void BuildBackground(RectTransform root)
